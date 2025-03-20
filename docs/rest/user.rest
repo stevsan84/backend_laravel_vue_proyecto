@@ -28,8 +28,8 @@ Content-Type: application/json
 
 {
   "name": "steven",
-  "email": "steven.update@mail.com",
-  "password": "123456"
+  "email": "steven@mail.com",
+  "password": "12345678"
 }
 
 ### Eliminar
