@@ -1,0 +1,15 @@
+GET http://127.0.0.1:8000/api/persona
+Accept: application/json
+Authorization: Bearer 1|R6EZGQdrGRVrdoadz5LK66RliDsHpKWEUpb4Nn2I19b59c0c
+
+### Guardar
+POST  http://127.0.0.1:8000/api/persona
+Accept: application/json
+Authorization: Bearer 1|R6EZGQdrGRVrdoadz5LK66RliDsHpKWEUpb4Nn2I19b59c0c
+Content-Type: application/json
+
+{
+    "nombres": "Suly",
+    "apellidos": "Sabando"
+
+}
