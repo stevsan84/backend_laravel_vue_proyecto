@@ -13,3 +13,28 @@ Content-Type: application/json
     "apellidos": "Sabando"
 
 }
+
+### Guardar persona + user
+POST  http://127.0.0.1:8000/api/persona/guardar-persona-user
+Accept: application/json
+Authorization: Bearer 1|R6EZGQdrGRVrdoadz5LK66RliDsHpKWEUpb4Nn2I19b59c0c
+Content-Type: application/json
+
+{
+    "nombres": "Fabricio",
+    "apellidos": "Ponce",
+    "email": "fabricio@mail.com",
+    "password": "fabricio54321"
+
+}
+
+### Asignar cuenta de usuario a persona
+POST  http://127.0.0.1:8000/api/persona/1/adduser
+Accept: application/json
+Authorization: Bearer 1|R6EZGQdrGRVrdoadz5LK66RliDsHpKWEUpb4Nn2I19b59c0c
+Content-Type: application/json
+
+{
+    "email": "grace@mail.com",
+    "password": "grace54321"
+}

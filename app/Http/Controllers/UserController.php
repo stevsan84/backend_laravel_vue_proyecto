@@ -23,18 +23,35 @@ class UserController extends Controller
     }
 
     public function funGuardar(Request $request){
-        $name = $request->name;
-        $email = $request->email;
-        $password = $request->password;
 
-        $user = new User();
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = $password;
+        //validar datos personles y usuario
+        $request->validate([
+            "name" => "required|string",
+            "email" => "required|email|unique:users",
+            "password" => "required|min:6|string"
+        ]);
 
-        $user->save();
+        try{
 
-        return ["mensaje" => "Usuario registrado en la BD"];
+            $name = $request->name;
+            $email = $request->email;
+            $password = $request->password;
+    
+            $user = new User();
+            $user->name = $name;
+            $user->email = $email;
+            $user->password = $password;
+    
+            $user->save();
+    
+            return response()->json(["mensaje" => "Usuario registrado en la BD"], 200);
+
+        }catch(\Exception $e) {
+            DB::rollBack();
+            return response()->json(["mensaje" => "Error del Servidor", "error" => $e->getMessage()],500);
+        }
+
+       
         
     }
 

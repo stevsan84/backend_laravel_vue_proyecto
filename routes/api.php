@@ -14,6 +14,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    // registrar persona con cuenta de usuario
+    Route::post("/persona/guardar-persona-user", [PersonaController::class,"funGuardarPersonaUser"]);
+
+    //asignara cuenta user a persona
+    Route::post("/persona/{id}/adduser", [PersonaController::class,"funAddUserPersona"]);
+
     //CRUS API REST USER
     Route::get("/user", [UserController::class, "funListar"]);
     Route::post("/user", [UserController::class, "funGuardar"]);
@@ -38,3 +45,9 @@ Route::prefix('/v1/auth')->group(function () {
         Route::post("/logout", [AuthController::class, "funLogout"]);
     });
 });
+
+
+//redireccion (NO AUTENTICADO)
+Route::get("/no-autentiacado", function(){
+    return["mensaje" => "SIN PERMISO"];
+})->name("login");
