@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -33,6 +37,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("persona", PersonaController::class);
     Route::apiResource("permiso", PermisoController::class);
     Route::apiResource("documento", DocumentoController::class);
+
+    Route::apiResource("categoria", CategoriaController::class);
+    Route::apiResource("cliente", ClienteController::class);
+    Route::apiResource("pedido", PedidoController::class);
+    Route::apiResource("producto", ProductoController::class);
+
 });
 
 //Auth
