@@ -1,0 +1,15 @@
+GET http://127.0.0.1:8000/api/categoria
+Accept: application/json
+Authorization: Bearer 15|4NRIknJreqjEUaZxAeLdT951MbSdVqbu9Eh4a4lo1843718b
+
+### Guardar
+POST  http://127.0.0.1:8000/api/categoria
+Accept: application/json
+Authorization: Bearer 15|4NRIknJreqjEUaZxAeLdT951MbSdVqbu9Eh4a4lo1843718b
+Content-Type: application/json
+
+{
+    "nombre": "Electrodomesticos",
+    "descripcion": "Electrodomesticos casa hogar",
+    //"estado": true
+}

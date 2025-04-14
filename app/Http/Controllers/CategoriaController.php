@@ -34,8 +34,8 @@ class CategoriaController extends Controller
         try {
             $categoria = new Categoria();
             $categoria->nombre = $request->nombre;
-            $categoria->detalle = $request->detalle;
-            $categoria->estado = $request->estado;
+            $categoria->descripcion = $request->descripcion;
+            //$categoria->estado = $request->estado;
 
             $categoria->save();
 

@@ -25,6 +25,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //asignara cuenta user a persona
     Route::post("/persona/{id}/adduser", [PersonaController::class,"funAddUserPersona"]);
 
+    //subida de imagen producto
+    Route::post("/producto/{id}/subir-imagen",[ProductoController::class,"actualizaImagen"]);
+
     //CRUS API REST USER
     Route::get("/user", [UserController::class, "funListar"]);
     Route::post("/user", [UserController::class, "funGuardar"]);
