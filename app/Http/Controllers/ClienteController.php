@@ -32,7 +32,7 @@ class ClienteController extends Controller
        $cliente->ci_nit = $request->ci_nit;
        $cliente->telefono = $request->telefono;
        $cliente->direccion = $request->direccion;
-       $cliente->direccion = $request->direccion;
+       $cliente->correo = $request->correo;
 
        $cliente->save();
 
@@ -61,5 +61,17 @@ class ClienteController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function buscarCliente(Request $request)
+    {
+        $buscar = $request->q;
+
+        $cliente = Cliente::where('nombre_completo',"LIKE","%$buscar%")
+                                ->orWhere('ci_nit',"LIKE","%$buscar%")
+                                ->first();
+
+        return response()->json($cliente, 200);
+
     }
 }

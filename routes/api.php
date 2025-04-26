@@ -28,6 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //subida de imagen producto
     Route::post("/producto/{id}/subir-imagen",[ProductoController::class,"actualizaImagen"]);
 
+    //buscar cliente
+    Route::get("/cliente/buscar",[ClienteController::class,"buscarCliente"]);
+
     //CRUS API REST USER
     Route::get("/user", [UserController::class, "funListar"]);
     Route::post("/user", [UserController::class, "funGuardar"]);

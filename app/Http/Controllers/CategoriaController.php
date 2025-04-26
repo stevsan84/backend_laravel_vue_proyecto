@@ -72,7 +72,7 @@ class CategoriaController extends Controller
             $categoria = Categoria::findOrFail($id);
 
             $categoria->nombre = $request->nombre;
-            $categoria->detalle = $request->detalle;
+            $categoria->descripcion = $request->descripcion;
             $categoria->estado = $request->estado;
 
             $categoria->update();
@@ -90,7 +90,7 @@ class CategoriaController extends Controller
     {
         try {
             $categoria = Categoria::findOrFail($id);
-            $categoria->estado = false;
+            $categoria->estado = !$categoria->estado;
             $categoria->update();
 
             return response()->json(["message" => "Categoría eliminada"], 200);
