@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PedidoController extends Controller
 {
@@ -75,6 +76,18 @@ class PedidoController extends Controller
         return response()->json(["message" => "Pedido resgistrado"], 201);
     }
 
+    public function funReportePDF($id){
+        $pedido = Pedido::with(["cliente","productos"])->find($id);
+
+        $pdf = Pdf::loadView('pdf.pedidos',["pedido" => $pedido] );
+        //return $pdf->download('pedidos.pdf');
+        return $pdf->stream();
+
+        //return response($pdf->output(), 200)
+        //->header('Content-Type', 'application/pdf')
+        //->header('Content-Disposition', 'inline; filename="ticket_pedido_'.$id.'.pdf"');
+
+    }
     /**
      * Display the specified resource.
      */

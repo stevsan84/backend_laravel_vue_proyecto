@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductosExport;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductoController extends Controller
 {
@@ -16,24 +18,22 @@ class ProductoController extends Controller
         $limit = isset($request->limit) ? $request->limit : 10;
         //$q = isset($request->q) ? $request->q : "";
 
-        if (isset($request->q)){
+        if (isset($request->q)) {
 
-            $productos = Producto::orderBy('id','desc')
-                                    ->where('nombre','LIKE','%'. $request->q .'%')
-                                    ->orWhere('precio','LIKE','%'. $request->q .'%')
-                                    ->with(['categoria'])
-                                    ->paginate($limit);
+            $productos = Producto::orderBy('id', 'desc')
+                ->where('nombre', 'LIKE', '%' . $request->q . '%')
+                ->orWhere('precio', 'LIKE', '%' . $request->q . '%')
+                ->with(['categoria'])
+                ->paginate($limit);
 
             return response()->json($productos, 200);
-
-        }else{
-            $productos = Producto::orderBy('id','desc')
-                                    ->with(['categoria'])
-                                    ->paginate($limit);
+        } else {
+            $productos = Producto::orderBy('id', 'desc')
+                ->with(['categoria'])
+                ->paginate($limit);
 
             return response()->json($productos, 200);
         }
-
     }
 
     /**
@@ -42,8 +42,8 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-             "nombre" => "required",
-             "categoria_id" => "required"
+            "nombre" => "required",
+            "categoria_id" => "required"
         ]);
 
         $producto = new Producto();
@@ -64,12 +64,11 @@ class ProductoController extends Controller
     public function show(string $id)
     {
         $producto = Producto::find($id);
-        if ($producto){
+        if ($producto) {
             return response()->json($producto, 200);
-        }else{
+        } else {
             return response()->json(["message" => "Producto no encontrado"], 404);
         }
-        
     }
 
     /**
@@ -80,18 +79,18 @@ class ProductoController extends Controller
         $request->validate([
             "nombre" => "required",
             "categoria_id" => "required"
-       ]);
+        ]);
 
-       $producto = Producto::find($id);
-       $producto->nombre = $request->nombre;
-       $producto->stock = $request->stock;
-       $producto->precio = $request->precio;
-       $producto->descripcion = $request->descripcion;
-       $producto->categoria_id = $request->categoria_id;
+        $producto = Producto::find($id);
+        $producto->nombre = $request->nombre;
+        $producto->stock = $request->stock;
+        $producto->precio = $request->precio;
+        $producto->descripcion = $request->descripcion;
+        $producto->categoria_id = $request->categoria_id;
 
-       $producto->update();
+        $producto->update();
 
-       return response()->json(["message" => "Producto actualizado"], 201);
+        return response()->json(["message" => "Producto actualizado"], 201);
     }
 
     /**
@@ -105,18 +104,24 @@ class ProductoController extends Controller
         return response()->json(["message" => "Producto actualizado de estado"], 200);
     }
 
-    public function actualizaImagen(Request $request, $id){
-        if ($file = $request->file("imagen")){
+    public function actualizaImagen(Request $request, $id)
+    {
+        if ($file = $request->file("imagen")) {
             $direccion_url = time() . "-" . $file->getClientOriginalName();
-            $file->move("imagenes",$direccion_url);
+            $file->move("imagenes", $direccion_url);
 
             $producto = Producto::find($id);
             $producto->imagen = "imagenes/" . $direccion_url;
             $producto->update();
 
             return response()->json(["message" => "Imagen actualizada"], 201);
-        }else{
+        } else {
             return response()->json(["message" => "La imagen es obligatoria"], 422);
         }
+    }
+
+    public function exportarExcel()
+    {
+        return Excel::download(new ProductosExport, 'productos.xlsx');
     }
 }

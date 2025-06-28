@@ -17,6 +17,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get("/pedido/{id}/pdf/list",[PedidoController::class,"funReportePDF"]);
+Route::get("/producto/exportarExcel",[ProductoController::class,"exportarExcel"]);
+
 Route::middleware('auth:sanctum')->group(function () {
 
     // registrar persona con cuenta de usuario
